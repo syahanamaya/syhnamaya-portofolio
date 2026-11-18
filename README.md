@@ -1,27 +1,27 @@
-# Syahana Maya — UI/UX Designer Portfolio
+# Portofolio Desainer UI/UX — Syahana Maya Sya'bana
 
-A responsive, static portfolio built with HTML, CSS, and vanilla JavaScript. It is designed to run locally without a build step and can be published on GitHub Pages.
+Portofolio statis dan responsif yang dibuat dengan HTML, CSS, dan JavaScript murni. Situs dapat dijalankan secara lokal tanpa proses build dan dipublikasikan melalui GitHub Pages.
 
-## Run locally
+## Menjalankan secara lokal
 
-Open `index.html` in a browser, or serve the project directory with any static file server. For example:
+Buka `index.html` di peramban atau jalankan server statis dari direktori proyek. Contoh:
 
 ```sh
 python -m http.server 8000
 ```
 
-Then visit `http://localhost:8000`.
+Kemudian buka `http://localhost:8000`.
 
-## Publish with GitHub Pages
+## Mempublikasikan melalui GitHub Pages
 
-Push this repository to GitHub. In **Settings → Pages**, choose the branch and `/ (root)` folder. The site uses relative asset paths and does not require a server-side runtime or build process.
+Push repositori ini ke GitHub. Di **Settings → Pages**, pilih branch dan folder `/ (root)`. Situs menggunakan jalur aset relatif dan tidak memerlukan runtime sisi server maupun proses build.
 
-## Update portfolio content
+## Memperbarui konten portofolio
 
-- Add verified project details to `window.portfolioProjects` in `js/projects.js`. Use the example schema there for case-study sections. Project categories should match the filter labels in `index.html`.
-- Add certificate metadata and image paths to `window.portfolioCertificates` in `js/projects.js`.
-- Add confirmed contact links to `window.portfolioProfile` in `js/projects.js`. Links are intentionally left blank until verified.
-- Replace the profile image placeholder in `index.html` with a supplied photograph and add project/certificate images under `assets/images/`.
-- The **Download CV** button opens the browser print dialog; choose “Save as PDF” to create a PDF from the included résumé summary. Update the summary in `index.html` when verified contact or experience information is available.
+- Tambahkan detail proyek yang sudah terverifikasi pada `window.portfolioProjects` di `js/projects.js`. Kategori proyek harus sesuai dengan label filter di `index.html`.
+- Tambahkan metadata sertifikat dan jalur gambar pada `window.portfolioCertificates` di `js/projects.js`.
+- Perbarui tautan kontak terverifikasi pada `window.portfolioProfile` di `js/projects.js`.
+- Simpan foto profil serta gambar proyek dan sertifikat di bawah `assets/images/`.
+- Tombol **Unduh CV** membuka dialog cetak peramban. Pilih “Simpan sebagai PDF” untuk membuat PDF dari ringkasan riwayat yang tersedia di `index.html`.
 
-Unknown project research, outcomes, certificates, and contact details are intentionally shown as placeholders rather than invented.
+Informasi proyek, hasil, sertifikat, dan kontak hanya ditampilkan jika tersedia dan terverifikasi.
