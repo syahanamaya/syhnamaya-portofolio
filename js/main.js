@@ -51,8 +51,6 @@
       </article>`).join("");
   };
 
-  const caseStudySections = [["overview", "Project Overview"]];
-
   const renderCaseStudy = (index) => {
     activeProjectIndex = index;
     activeImageIndex = 0;
@@ -60,19 +58,86 @@
     const details = project.caseStudy || {};
     const image = project.images[activeImageIndex];
     const caption = imageLabel(project, activeImageIndex);
+    const relatedProjectIndex = details.relatedProject
+      ? visibleProjects.findIndex((relatedProject) => relatedProject.title === details.relatedProject.projectTitle)
+      : -1;
+    const metaItems = [
+      ["Project Type", details.projectType],
+      ["Year", details.year],
+      ["Role", details.role],
+      ["Tools", Array.isArray(details.tools) ? details.tools.join(", ") : details.tools],
+      ["Testing", details.testing]
+    ].filter(([, value]) => value);
+    const paragraphs = (value) => (Array.isArray(value) ? value : [value])
+      .filter(Boolean)
+      .map((text) => `<p>${escapeHtml(text)}</p>`)
+      .join("");
+    const sections = [
+      details.overview || project.description
+        ? `<section class="project-info-section project-overview"><h3>Project Overview</h3>${paragraphs(details.overview || project.description)}</section>`
+        : "",
+      details.problem || details.objective
+        ? `<div class="project-context-sections">
+            ${details.problem ? `<section class="project-info-section"><h3>Problem</h3>${paragraphs(details.problem)}</section>` : ""}
+            ${details.objective ? `<section class="project-info-section"><h3>${escapeHtml(details.objectiveTitle || "Objective")}</h3>${paragraphs(details.objective)}</section>` : ""}
+          </div>`
+        : "",
+      Array.isArray(details.designObjectives) && details.designObjectives.length
+        ? `<section class="project-info-section"><h3>Design Objective</h3><ul class="project-objective-list">${details.designObjectives.map((objective) => `<li>${escapeHtml(objective)}</li>`).join("")}</ul></section>`
+        : "",
+      details.targetUser
+        ? `<section class="project-info-section"><h3>Target User</h3>${paragraphs(details.targetUser)}</section>`
+        : "",
+      Array.isArray(details.userRoles) && details.userRoles.length
+        ? `<section class="project-info-section"><h3>User Roles</h3><ul class="project-role-list">${details.userRoles.map((role) => `<li><strong>${escapeHtml(role.title)}</strong><span>${escapeHtml(role.description)}</span></li>`).join("")}</ul></section>`
+        : "",
+      Array.isArray(details.features) && details.features.length
+        ? `<section class="project-info-section"><h3>UI Design &amp; Features</h3><ul class="project-feature-list">${details.features.map((feature) => `<li><strong>${escapeHtml(feature.title)}</strong><span>${escapeHtml(feature.description)}</span></li>`).join("")}</ul></section>`
+        : "",
+      Array.isArray(details.featureGroups) && details.featureGroups.length
+        ? `<section class="project-info-section"><h3>Main Features</h3><div class="project-feature-groups">${details.featureGroups.map((group) => `<div class="project-feature-group"><h4>${escapeHtml(group.title)}</h4><ul>${group.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></div>`).join("")}</div></section>`
+        : "",
+      Array.isArray(details.contribution) && details.contribution.length
+        ? `<section class="project-info-section"><h3>My Contribution</h3><ul>${details.contribution.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></section>`
+        : "",
+      details.result
+        ? `<section class="project-info-section project-result"><h3>${escapeHtml(details.resultTitle || "Result")}</h3>${paragraphs(details.result)}</section>`
+        : "",
+      details.relatedProject
+        ? `<section class="project-info-section project-related"><h3>Related Project</h3><p>${escapeHtml(details.relatedProject.description)}</p>${relatedProjectIndex >= 0
+          ? `<button type="button" class="related-project-link" data-related-project-index="${relatedProjectIndex}">${escapeHtml(details.relatedProject.title)} <span aria-hidden="true">↗</span></button>`
+          : `<p class="related-project-title">${escapeHtml(details.relatedProject.title)}</p>`}</section>`
+        : ""
+    ].filter(Boolean).join("");
+    const projectLinks = [
+      ["GitHub", details.links && details.links.github],
+      ["Live Demo", details.links && details.links.liveDemo]
+    ].filter(([, href]) => href && validUrl(href));
     caseStudyContent.innerHTML = `
       <header class="case-study-header">
         <p class="eyebrow"><span class="eyebrow-line"></span> ${escapeHtml(project.category || "PROJECT CASE STUDY")}</p>
-        <h2 id="case-study-title">${escapeHtml(project.title || "Project title to be added")}</h2>
+        <h2 id="case-study-title">${escapeHtml(details.displayTitle || project.title || "Project title to be added")}</h2>
+        ${details.subtitle ? `<p class="project-header-subtitle">${escapeHtml(details.subtitle)}</p>` : ""}
+        <p class="project-header-description">${escapeHtml(project.description || "")}</p>
+        ${metaItems.length ? `<dl class="project-meta-list">${metaItems.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>` : ""}
       </header>
-      <div class="project-gallery">
-        <div class="project-gallery-stage">
-          <img class="project-gallery-image" src="${escapeHtml(encodeURI(image.src))}" alt="${escapeHtml(`${project.title}: ${caption}`)}">
-          ${project.images.length > 1 ? `<button class="gallery-arrow gallery-previous" type="button" data-image-step="-1" aria-label="Previous image">‹</button><button class="gallery-arrow gallery-next" type="button" data-image-step="1" aria-label="Next image">›</button><span class="gallery-counter" aria-live="polite">${activeImageIndex + 1} / ${project.images.length}</span>` : ""}
+      <div class="project-detail-layout">
+        <div class="project-visual-column">
+          <div class="project-gallery">
+            <div class="project-gallery-stage">
+              <button class="project-gallery-zoom" type="button" data-image-preview aria-label="Enlarge ${escapeHtml(caption)}">
+                <img class="project-gallery-image" src="${escapeHtml(encodeURI(image.src))}" alt="${escapeHtml(`${project.title}: ${caption}`)}">
+              </button>
+              ${project.images.length > 1 ? `<button class="gallery-arrow gallery-previous" type="button" data-image-step="-1" aria-label="Previous image">‹</button><button class="gallery-arrow gallery-next" type="button" data-image-step="1" aria-label="Next image">›</button><span class="gallery-counter" aria-live="polite">${activeImageIndex + 1} / ${project.images.length}</span>` : ""}
+            </div>
+            <p class="project-gallery-caption">${escapeHtml(caption)} <span>· Click image to enlarge</span></p>
+          </div>
         </div>
-        <p class="project-gallery-caption">${escapeHtml(caption)}</p>
-      </div>
-      ${caseStudySections.filter(([key]) => details[key]).map(([key, title]) => `<section class="case-study-section"><h3>${title}</h3><p>${escapeHtml(details[key])}</p></section>`).join("")}`;
+        <div class="project-detail-copy">
+          ${sections}
+          ${projectLinks.length ? `<section class="project-info-section project-links"><h3>Project Links</h3><div>${projectLinks.map(([label, href]) => `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${label} <span aria-hidden="true">↗</span></a>`).join("")}</div></section>` : ""}
+        </div>
+      </div>`;
     caseStudyPagination.innerHTML = `
       <button type="button" data-case-step="-1" ${index === 0 ? "disabled" : ""}>← Previous project</button>
       <button type="button" data-case-step="1" ${index === visibleProjects.length - 1 ? "disabled" : ""}>Next project →</button>`;
@@ -97,6 +162,22 @@
   });
 
   caseStudyContent.addEventListener("click", (event) => {
+    const relatedProjectButton = event.target.closest("[data-related-project-index]");
+    if (relatedProjectButton) {
+      renderCaseStudy(Number(relatedProjectButton.dataset.relatedProjectIndex));
+      return;
+    }
+    const previewButton = event.target.closest("[data-image-preview]");
+    if (previewButton) {
+      const project = visibleProjects[activeProjectIndex];
+      const image = project.images[activeImageIndex];
+      certificatePreview.src = encodeURI(image.src);
+      certificatePreview.alt = `${project.title}: ${imageLabel(project, activeImageIndex)}`;
+      certificateCaption.textContent = `${project.title} · ${imageLabel(project, activeImageIndex)}`;
+      imageDialog.showModal();
+      document.body.classList.add("dialog-open");
+      return;
+    }
     const button = event.target.closest("[data-image-step]");
     if (!button) return;
     const project = visibleProjects[activeProjectIndex];
@@ -119,6 +200,15 @@
     dialog.close();
     if (!document.querySelector("dialog[open]")) document.body.classList.remove("dialog-open");
   };
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    const openDialogs = [...document.querySelectorAll("dialog[open]")];
+    const topDialog = openDialogs[openDialogs.length - 1];
+    if (topDialog) {
+      event.preventDefault();
+      closeDialog(topDialog);
+    }
+  });
   document.querySelector(".dialog-back").addEventListener("click", (event) => {
     event.preventDefault();
     closeDialog(caseStudyDialog);

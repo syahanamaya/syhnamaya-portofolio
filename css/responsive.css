@@ -37,6 +37,11 @@
   .contact-actions { flex-direction: row; align-items: center; justify-content: space-between; width: 100%; }
   .project-gallery-stage { min-height: 250px; padding: 12px; }
   .project-gallery-image { height: min(58vh, 620px); min-height: 250px; }
+  .case-study-dialog[open] { width: calc(100vw - 40px); max-height: 86vh; }
+  .case-study-dialog .dialog-content { padding: 20px; }
+  .project-detail-layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .project-visual-column { position: static; }
+  .case-study-dialog .project-gallery-stage { height: clamp(230px, 40vh, 330px); }
 }
 @media (max-width: 520px) {
   .container { width: calc(100% - 36px); }
@@ -84,6 +89,18 @@
   .gallery-arrow { width: 36px; height: 36px; font-size: 24px; }
   .gallery-previous { left: 8px; }
   .gallery-next { right: 8px; }
+  .case-study-dialog[open] { width: calc(100vw - 20px); max-height: 90vh; max-height: 90dvh; border-radius: 12px; }
+  .case-study-dialog .dialog-topbar { padding: 10px 14px; }
+  .case-study-dialog .dialog-content { padding: 17px; }
+  .case-study-dialog .case-study-header h2 { font-size: 28px; }
+  .project-meta-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .project-meta-list div { max-width: none; }
+  .case-study-dialog .project-gallery-stage { height: clamp(200px, 32vh, 260px); }
+  .case-study-dialog .gallery-arrow { width: 32px; height: 32px; font-size: 20px; }
+  .case-study-dialog .gallery-previous { left: 7px; }
+  .case-study-dialog .gallery-next { right: 7px; }
+  .case-study-dialog .case-study-pagination { padding: 10px 14px; }
+  .project-info-section p, .project-info-section ul { font-size: 11px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
