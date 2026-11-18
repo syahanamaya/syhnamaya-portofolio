@@ -19,6 +19,58 @@
 html { scroll-behavior: smooth; scroll-padding-top: 92px; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
 body.dialog-open { overflow: hidden; }
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #29234D;
+}
+
+.brand-logo {
+  font-family: 'Poppins', sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  color: #FFFFFF;
+  background: #29234D;
+  padding: 8px 10px;
+  border-radius: 10px;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.brand-dot {
+  color: #A995F5;
+}
+
+.brand-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.7px;
+}
+
+.brand:hover .brand-logo {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .brand {
+    gap: 8px;
+  }
+
+  .brand-logo {
+    font-size: 18px;
+    padding: 7px 8px;
+  }
+
+  .brand-name {
+    font-size: 14px;
+  }
+}
+
 button, a { font: inherit; }
 a { color: inherit; text-decoration: none; }
 button { color: inherit; }
@@ -63,7 +115,6 @@ h1, h2, h3, p { margin-top: 0; }
 .social-mark { width: 16px; height: 16px; display: inline-grid; place-items: center; border: 1px solid #aeb8c6; border-radius: 50%; font-size: 9px; }
 .social-placeholder { display: inline-flex; align-items: center; gap: 7px; color: #737e8b; font-size: 10px; line-height: 1.4; }
 .social-placeholder small { display: block; color: #8a94a2; font-size: 9px; }
-.cv-note { margin: 10px 0 0; color: var(--muted); font-size: 11px; }
 .hero-visual { position: relative; min-width: 0; display: flex; justify-content: flex-end; }
 .hero-portrait-stage { width: min(100%, 470px); aspect-ratio: 4 / 5; max-height: 560px; overflow: hidden; border-radius: 6px; background: var(--light-blue); box-shadow: 0 24px 60px rgb(23 59 103 / 12%); }
 .hero-portrait { width: 100%; height: 100%; object-fit: cover; object-position: center 34%; }
@@ -118,6 +169,8 @@ h2 { margin-bottom: 0; font-family: var(--heading); font-size: clamp(37px, 4.5vw
 .experience-period { margin: 2px 0 0; color: var(--blue); font-size: 10px; font-weight: 600; }
 .experience-item h3 { margin: 0 0 6px; font-family: var(--heading); font-size: 16px; font-weight: 600; }
 .experience-item div p { margin: 0; color: var(--muted); font-size: 11px; }
+.experience-item ul { display: grid; gap: 7px; margin: 14px 0 0; padding-left: 17px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.experience-item li { padding-left: 2px; }
 
 .skills-section { background: #fff; }
 .skills-heading { margin-bottom: 42px; }
@@ -131,6 +184,7 @@ h2 { margin-bottom: 0; font-family: var(--heading); font-size: clamp(37px, 4.5vw
 .certificates-section { background: #f2f6fa; }
 .certificate-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .certificate-card { overflow: hidden; border-radius: var(--radius); background: white; transition: transform .25s ease, box-shadow .25s ease; }
+.certificate-card-text { display: flex; flex-direction: column; justify-content: center; }
 .certificate-card:hover { box-shadow: var(--shadow-card); transform: translateY(-3px); }
 .certificate-image-button { position: relative; width: 100%; height: 185px; display: grid; place-items: center; padding: 0; overflow: hidden; border: 0; background: #e7eef6; cursor: zoom-in; }
 .certificate-image-button img { width: 100%; height: 100%; padding: 8px; object-fit: contain; transition: transform .5s ease; }
@@ -139,6 +193,7 @@ h2 { margin-bottom: 0; font-family: var(--heading); font-size: clamp(37px, 4.5vw
 .certificate-info { padding: 17px 18px 19px; }
 .certificate-info h3 { margin: 0 0 5px; font-family: var(--heading); font-size: 13px; font-weight: 600; }
 .certificate-info p { margin: 0; color: var(--muted); font-size: 10px; }
+.certificate-info .certificate-description { margin-top: 8px; line-height: 1.65; }
 .certificate-empty { grid-column: 1 / -1; padding: 32px 0; border-top: 1px solid #d8e1eb; border-bottom: 1px solid #d8e1eb; }
 
 .contact-section { padding-block: 84px; background: var(--navy); color: white; }
@@ -147,6 +202,7 @@ h2 { margin-bottom: 0; font-family: var(--heading); font-size: clamp(37px, 4.5vw
 .contact-section h2 { max-width: 600px; font-size: clamp(38px, 5vw, 58px); }
 .contact-section h2 em { color: #a7c8e7; font-weight: 500; }
 .contact-description { margin: 18px 0 0; color: #c4d2e0; font-size: 12px; }
+.contact-location { margin: 8px 0 0; color: #c4d2e0; font-size: 11px; }
 .contact-actions { min-width: 210px; display: flex; flex-direction: column; align-items: flex-start; gap: 23px; }
 .contact-links { display: flex; flex-direction: column; gap: 10px; }
 .contact-link { display: flex; align-items: center; gap: 9px; color: #f0f4f8; font-size: 11px; }
@@ -250,14 +306,3 @@ h2 { margin-bottom: 0; font-family: var(--heading); font-size: clamp(37px, 4.5vw
 .project-info-section .related-project-title { color: var(--navy); font-weight: 600; }
 .case-study-dialog .case-study-pagination { flex: 0 0 auto; padding: 12px 22px; }
 .case-study-dialog .case-study-pagination button { font-size: 9px; }
-
-.print-profile { display: none; }
-
-@media print {
-  body > *:not(.print-profile) { display: none !important; }
-  .print-profile { display: block; padding: 25mm; color: #202b3c; font-family: Arial, sans-serif; }
-  .print-profile h1 { font-size: 28pt; }
-  .print-profile h2 { margin: 18pt 0 5pt; font-size: 14pt; }
-  .print-profile p { font-size: 10pt; }
-  .print-note { margin-top: 28pt; color: #6b7280; font-size: 9pt !important; }
-}

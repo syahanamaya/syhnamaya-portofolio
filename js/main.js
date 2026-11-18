@@ -231,11 +231,13 @@
     certificateGrid.innerHTML = `<div class="certificate-empty"><h3>Sertifikat akan ditampilkan di sini.</h3><p>Belum ada informasi atau gambar sertifikat.</p></div>`;
   } else {
     certificateGrid.innerHTML = certificates.map((certificate, index) => `
-      <article class="certificate-card">
-        <button class="certificate-image-button" type="button" data-certificate-index="${index}" aria-label="Lihat pratinjau ${escapeHtml(certificate.name || "sertifikat")}">
-          ${certificate.image ? `<img src="${escapeHtml(certificate.image)}" alt="${escapeHtml(certificate.name || "Sertifikat")}">` : "<span>Gambar sertifikat belum tersedia</span>"}
-        </button>
-        <div class="certificate-info"><h3>${escapeHtml(certificate.name || "Nama sertifikat belum ditambahkan")}</h3><p>${escapeHtml(certificate.organization || "Penerbit belum ditambahkan")} · ${escapeHtml(certificate.year || "Tahun —")}</p></div>
+      <article class="certificate-card${certificate.image ? "" : " certificate-card-text"}">
+        ${certificate.image ? `<button class="certificate-image-button" type="button" data-certificate-index="${index}" aria-label="Lihat pratinjau ${escapeHtml(certificate.name || "sertifikat")}"><img src="${escapeHtml(certificate.image)}" alt="${escapeHtml(certificate.name || "Sertifikat")}"></button>` : ""}
+        <div class="certificate-info">
+          <h3>${escapeHtml(certificate.name || "Nama sertifikat belum ditambahkan")}</h3>
+          <p>${escapeHtml(certificate.organization || "Penerbit belum ditambahkan")} · ${escapeHtml(certificate.year || "Tahun —")}</p>
+          ${certificate.description ? `<p class="certificate-description">${escapeHtml(certificate.description)}</p>` : ""}
+        </div>
       </article>`).join("");
   }
 
@@ -290,17 +292,9 @@
       ? `<a class="contact-link" href="${escapeHtml(href)}"${externalContactAttributes(key)}><span aria-hidden="true">${mark}</span>${escapeHtml(value)}</a>`
       : `<span class="contact-placeholder">Kontak ${label} belum ditambahkan</span>`;
   }).join("") + phoneContact;
-  document.querySelector("#print-contact-details").textContent = [
-    profile.email && `Surel: ${profile.email}`,
-    profile.phone && `Telepon: ${profile.phone}`,
-    profile.linkedin && `LinkedIn: ${profile.linkedin}`,
-    profile.github && `GitHub: ${profile.github}`
-  ].filter(Boolean).join(" · ");
-
-  document.querySelector("#download-cv").addEventListener("click", () => {
-    document.querySelector("#cv-note").hidden = false;
-    window.print();
-  });
+  const contactLocation = document.querySelector("#contact-location");
+  contactLocation.textContent = profile.location || "";
+  contactLocation.hidden = !profile.location;
 
   renderProjects();
 })();

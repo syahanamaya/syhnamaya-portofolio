@@ -286,9 +286,10 @@ window.portfolioProjects = [
 
 window.portfolioCertificates = [
   {
-    name: "Intro to Software Engineering",
-    organization: "RevoU Coding Camp",
-    year: "2026",
+    name: "Software Engineering / Tech Mini Course",
+    organization: "RevoU",
+    year: "Oktober 2026",
+    description: "Mempelajari dasar pengembangan web modern, logika pemrograman, dan praktik pembuatan antarmuka web.",
     image: "assets/images/certificates/Bootcamp.jpg"
   },
   {
@@ -296,6 +297,11 @@ window.portfolioCertificates = [
     organization: "Komisi Nasional Hak Asasi Manusia",
     year: "2024",
     image: "assets/images/certificates/Sertifikat Magang.jpeg"
+  },
+  {
+    name: "TOEFL Prediction Test",
+    organization: "Lembaga Bahasa Universitas Pamulang",
+    year: "September 2025"
   }
 ];
 
@@ -303,5 +309,6 @@ window.portfolioProfile = {
   email: "syahanamaya@gmail.com",
   linkedin: "https://www.linkedin.com/in/syahanamaya",
   github: "https://github.com/syahanamaya",
-  phone: "085892960832"
+  phone: "+62 858 9296 0832",
+  location: "Tangerang Selatan, Banten"
 };
